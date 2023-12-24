@@ -1,3 +1,4 @@
+import 'package:first_app/screens/messenger.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,9 +13,7 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: SafeArea(child: Text("Hello World")),
-      ),
+      home: MessengerScreen(),
     );
   }
 
