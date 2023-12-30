@@ -19,3 +19,7 @@ List of Apps :
 
 # Login Screen
 ![image](https://github.com/ojpro/1st-flutter-app/assets/108437129/b4b216d4-69e1-4885-bcd2-e768cf64130f)
+
+# Apollo App
+![image](https://github.com/ojpro/1st-flutter-app/assets/108437129/0a31dba8-9a92-4a28-93c5-db6c8c0b8e9e)
+
