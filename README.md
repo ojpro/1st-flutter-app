@@ -1,4 +1,4 @@
-# first_app
+# My First Flutter App
 
 A collection of flutter apps I built during a flutter course
 
