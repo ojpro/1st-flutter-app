@@ -28,7 +28,6 @@ class BMIResultScreen extends StatelessWidget {
   }
 
   InterpretationType interpret(value) {
-    value = 34;
     switch (value) {
       case < 18.5:
         return InterpretationType(
