@@ -1,16 +1,12 @@
 # first_app
 
-A new Flutter project.
+A collection of flutter apps I built during a flutter course
 
-## Getting Started
+List of Apps :
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- BMI : Beautifully Designed BMI Calculator
+- Messenger : Messenger Clone with some UI edits
+- Apollo : Simple Dark UI that shows the list of planets
+- Login : Login Screen with dark background a simple UI
+- Counter : A simple Counter Interface
+- Contacts : Simple Contacts app
