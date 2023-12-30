@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ContactType {
-  final int id;
-  final String fullName;
-  final String phoneNumber;
-
-  ContactType(this.id, this.fullName, this.phoneNumber);
-}
+import '../models/user.dart';
 
 class ContactsScreen extends StatelessWidget {
   List<ContactType> contacts = [

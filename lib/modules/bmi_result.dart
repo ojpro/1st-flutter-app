@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:first_app/screens/bmi_calculator.dart';
+import 'package:first_app/modules/bmi_calculator.dart';
 import 'package:flutter/material.dart';
 
 class InterpretationType {
