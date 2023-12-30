@@ -1,15 +1,15 @@
 # My First Flutter App
 
-A collection of flutter apps I built during a flutter course
+A collection of Flutter apps I built during a Flutter course
 
 List of Apps :
 
-- BMI : Beautifully Designed BMI Calculator
-- Messenger : Messenger Clone with some UI edits
-- Apollo : Simple Dark UI that shows the list of planets
-- Login : Login Screen with dark background a simple UI
-- Counter : A simple Counter Interface
-- Contacts : Simple Contacts app
+- BMI: Beautifully Designed BMI Calculator
+- Messenger: Messenger Clone with some UI edits
+- Apollo: Simple Dark UI that shows the list of planets
+- Login: Login Screen with a dark background and a simple UI
+- Counter: A simple Counter Interface
+- Contacts: Simple Contacts app
 
 
 # BMI Calculator
