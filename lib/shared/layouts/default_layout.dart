@@ -260,7 +260,8 @@ class _DefaultLayoutState extends State<DefaultLayout> {
   }
 
   Future<List<Task>> getTasks(db) async {
-    final List<Map<String, dynamic>> tasks = await db.query('tasks');
+    final database = await db;
+    final List<Map<String, dynamic>> tasks = await database.query('tasks');
 
     return List.generate(
       tasks.length,
