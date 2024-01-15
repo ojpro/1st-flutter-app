@@ -4,7 +4,7 @@ Widget TaskItem({
   required bool? completed,
   required String name,
   required Function(bool?) onChange,
-  Function? onDeletePressed,
+  required Function onDeletePressed,
 }) =>
     Container(
       padding: const EdgeInsets.symmetric(vertical: 6),
@@ -20,7 +20,7 @@ Widget TaskItem({
               onChanged: (bool? checked) => onChange(checked)),
           Expanded(
             child: GestureDetector(
-              onTap: () => onChange(completed == true ? false :  true),
+              onTap: () => onChange(completed == true ? false : true),
               child: Text(
                 name,
                 style: TextStyle(
@@ -34,15 +34,16 @@ Widget TaskItem({
           ),
           PopupMenuButton(
               position: PopupMenuPosition.under,
-              padding: EdgeInsets.zero,
               itemBuilder: (context) => [
                     PopupMenuItem(
+                      value: 'delete',
                       child: GestureDetector(
-                        onTap: () => onDeletePressed!(),
+                        onTap: () => onDeletePressed(),
                         child: const Text('Delete'),
                       ),
                     ),
                     const PopupMenuItem(
+                      value: 'archive',
                       child: Text('Archive'),
                     ),
                   ])

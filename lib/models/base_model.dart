@@ -14,7 +14,4 @@ abstract class BaseModal {
       'updated_at': updatedAt ?? DateTime.timestamp().millisecondsSinceEpoch
     };
   }
-
-  // get table name
-  Type tableName() => runtimeType;
 }

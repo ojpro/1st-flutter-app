@@ -1,6 +1,8 @@
 import 'package:first_app/shared/components/task_item.dart';
-import 'package:first_app/shared/constants.dart';
+import 'package:first_app/shared/cubit/cubit.dart';
+import 'package:first_app/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TodoScreen extends StatefulWidget {
   @override
@@ -12,21 +14,28 @@ class _TodoScreenState extends State<TodoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) => TaskItem(
-          completed: tasks[index].status == 'done',
-          name: tasks[index].name,
-          onChange: (checked) {
-            setState(
-              () {
-                tasks[index].status = checked == true ? 'done' : 'todo';
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (BuildContext context, AppStates state) => {},
+      builder: (BuildContext context, AppStates state) {
+        AppCubit appCubit = AppCubit.get(context);
+        return ListView.builder(
+          itemBuilder: (context, index) => TaskItem(
+              completed: appCubit.getTask(index).status == 'done',
+              name: appCubit.getTask(index).name,
+              onChange: (checked) {
+                setState(
+                  () {
+                    appCubit.getTask(index).status =
+                        checked == true ? 'done' : 'todo';
+                  },
+                );
               },
-            );
-          },
-      onDeletePressed: (){
-            print(index);
-      }),
-      itemCount: tasks.length,
+              onDeletePressed: () {
+                appCubit.deleteTask(appCubit.getTask(index).id ?? 0);
+              }),
+          itemCount: appCubit.tasks.length,
+        );
+      },
     );
   }
 }
