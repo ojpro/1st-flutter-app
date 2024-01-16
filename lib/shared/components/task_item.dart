@@ -5,13 +5,14 @@ Widget TaskItem({
   required String name,
   required Function(bool?) onChange,
   required Function onDeletePressed,
+  required Function onEditPressed,
 }) =>
     Container(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 2),
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       decoration: BoxDecoration(
+        border: Border.all(color: Colors.black87, width: 2),
         borderRadius: BorderRadius.circular(8),
-        color: Colors.grey.shade200,
       ),
       child: Row(
         children: [
@@ -33,20 +34,32 @@ Widget TaskItem({
             ),
           ),
           PopupMenuButton(
-              position: PopupMenuPosition.under,
-              itemBuilder: (context) => [
-                    PopupMenuItem(
-                      value: 'delete',
-                      child: GestureDetector(
-                        onTap: () => onDeletePressed(),
-                        child: const Text('Delete'),
-                      ),
-                    ),
-                    const PopupMenuItem(
-                      value: 'archive',
-                      child: Text('Archive'),
-                    ),
-                  ])
+            position: PopupMenuPosition.under,
+            enableFeedback: true,
+            elevation: 1,
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 0,
+                child: GestureDetector(
+                  onTap: () {
+                    onEditPressed();
+                    Navigator.pop(context);
+                  },
+                  child: Text('Edit'),
+                ),
+              ),
+              PopupMenuItem(
+                value: 1,
+                child: GestureDetector(
+                  onTap: () {
+                    onDeletePressed();
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Delete'),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

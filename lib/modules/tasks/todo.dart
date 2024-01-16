@@ -1,38 +1,40 @@
+import 'package:first_app/models/migrations/task.dart';
+import 'package:first_app/shared/components/bottom_sheet.dart';
 import 'package:first_app/shared/components/task_item.dart';
 import 'package:first_app/shared/cubit/cubit.dart';
 import 'package:first_app/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TodoScreen extends StatefulWidget {
-  @override
-  State<TodoScreen> createState() => _TodoScreenState();
-}
-
-class _TodoScreenState extends State<TodoScreen> {
+class TodoScreen extends StatelessWidget {
   bool? completed = false;
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (BuildContext context, AppStates state) => {},
-      builder: (BuildContext context, AppStates state) {
-        AppCubit appCubit = AppCubit.get(context);
+      listener: (BuildContext buildContext, AppStates state) => {},
+      builder: (BuildContext buildContext, AppStates state) {
+        AppCubit appCubit = AppCubit.get(buildContext);
         return ListView.builder(
-          itemBuilder: (context, index) => TaskItem(
-              completed: appCubit.getTask(index).status == 'done',
-              name: appCubit.getTask(index).name,
+          itemBuilder: (itemContext, index) {
+            Task task = appCubit.getTask(index);
+
+            return TaskItem(
+              completed: task.status == 'done',
+              name: task.name,
               onChange: (checked) {
-                setState(
-                  () {
-                    appCubit.getTask(index).status =
-                        checked == true ? 'done' : 'todo';
-                  },
-                );
+                task.status = checked == true ? 'done' : 'todo';
+
+                appCubit.updateTask(task);
               },
-              onDeletePressed: () {
-                appCubit.deleteTask(appCubit.getTask(index).id ?? 0);
-              }),
+              onDeletePressed: () async {
+                await appCubit.deleteTask(task.id ?? 0);
+              },
+              onEditPressed: () {
+                print('edit');
+              },
+            );
+          },
           itemCount: appCubit.tasks.length,
         );
       },

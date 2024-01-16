@@ -29,3 +29,5 @@ class TasksFetchedState extends AppStates {}
 class TaskUpdatedState extends AppStates {}
 
 class TaskDeletedState extends AppStates {}
+
+class TaskStatusChangeState extends AppStates {}

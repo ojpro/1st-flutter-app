@@ -15,6 +15,7 @@ class DefaultInput extends StatelessWidget {
   final TextEditingController controller;
   final Function validate;
   Function? onSuffixClick;
+  final bool autoFocus;
 
   DefaultInput({
     super.key,
@@ -27,11 +28,13 @@ class DefaultInput extends StatelessWidget {
     required this.controller,
     required this.validate,
     this.onSuffixClick,
+    this.autoFocus = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: autoFocus,
       controller: controller,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       style: TextStyle(

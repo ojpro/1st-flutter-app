@@ -1,5 +1,6 @@
 import 'package:first_app/shared/cubit/states.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -21,6 +22,10 @@ class AppCubit extends Cubit<AppStates> {
 
   var nameController = TextEditingController();
   var dueController = TextEditingController();
+
+  GlobalKey<FormState> bottomSheetFormKey = GlobalKey<FormState>();
+
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   // init constructor
   AppCubit() : super(AppInitState());
@@ -60,6 +65,7 @@ class AppCubit extends Cubit<AppStates> {
 
   String getTaskDue() => dueController.text;
 
+  void setTaskName(String name) => nameController.text = name;
   void setTaskDue(String due) => dueController.text = due;
 
   // get task
@@ -130,14 +136,34 @@ class AppCubit extends Cubit<AppStates> {
 
     tasks = tasksList;
 
-    print(tasks);
     emit(TasksFetchedState());
     return tasks;
   }
 
-  void deleteTask(int id) {
-    dbConnection.delete('tasks', where: 'id = ?', whereArgs: [id]);
-    getTasks(null);
+  Future<void> deleteTask(int id) async {
+    await dbConnection.delete(
+      'tasks',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
     emit(TaskDeletedState());
+
+    getTasks(dbConnection);
+  }
+
+  Future<Task> updateTask(Task task) async {
+    await dbConnection.update(
+      'tasks',
+      task.toMap(),
+      where: 'id = ?',
+      whereArgs: [task.id],
+    );
+
+    emit(TaskUpdatedState());
+
+    getTasks(null);
+
+    return task;
   }
 }

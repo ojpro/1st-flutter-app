@@ -1,13 +1,13 @@
 import 'package:first_app/models/base_model.dart';
 
 class Task extends BaseModal {
-  final String name;
+  String name;
   String? status = 'todo';
   Task({
     int? id,
     this.status,
-    required this.name,
-    required this.dueDate,
+    this.name = '',
+    this.dueDate,
     int? createdAt,
     int? updatedAt,
   }) {
