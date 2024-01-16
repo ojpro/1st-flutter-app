@@ -1,5 +1,4 @@
 import 'package:first_app/shared/cubit/states.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
@@ -13,12 +12,14 @@ class AppCubit extends Cubit<AppStates> {
   int currentTab = 0;
   List<Widget> screens = [
     TodoScreen(),
-    const DoneScreen(),
-    const ArchivedScreen()
+    DoneScreen(),
+    ArchivedScreen()
   ];
   bool isAddTaskSheetActive = false;
   late Database dbConnection;
-  List<Task> tasks = [];
+  List<Task> todoTasks = [];
+  List<Task> doneTasks = [];
+  List<Task> archivedTasks = [];
 
   var nameController = TextEditingController();
   var dueController = TextEditingController();
@@ -65,12 +66,24 @@ class AppCubit extends Cubit<AppStates> {
 
   String getTaskDue() => dueController.text;
 
-  void setTaskName(String name) => nameController.text = name;
-  void setTaskDue(String due) => dueController.text = due;
+  void setTaskName(String name) {
+    nameController.text = name;
+    emit(AppChangeBottomSheetState());
+  }
 
-  // get task
-  Task getTask(int id) => tasks[id];
+  void setTaskDue(String due) {
+    dueController.text = due;
+    emit(AppChangeBottomSheetState());
+  }
 
+  String getEditingTaskName() {
+    return nameController.text;
+  }
+
+  void setEditingTask(Task task) {
+    nameController.text = task.name;
+    dueController.text = task.dueDate.toString();
+  }
   // get current bottom sheet state
   bool getCurrentBottomSheetState() => isAddTaskSheetActive;
 
@@ -93,10 +106,7 @@ class AppCubit extends Cubit<AppStates> {
       onOpen: (db) {
         emit(DatabaseOpenedState());
         // fetch all tasks
-        getTasks(db).then((value) {
-          tasks = value;
-          emit(TasksFetchedState());
-        });
+        getTasks(db);
       },
     ).then((value) {
       dbConnection = value;
@@ -123,21 +133,37 @@ class AppCubit extends Cubit<AppStates> {
     List<Map<String, dynamic>> query = await database.query('tasks');
 
     List<Task> tasksList = List.generate(
-      query.length,
-      (index) => Task(
-        id: query[index]['id'] as int,
-        name: query[index]['name'] as String,
-        status: query[index]['status'] as String,
-        dueDate: query[index]['due_date'] as int?,
-        createdAt: query[index]['created_at'] as int?,
-        updatedAt: query[index]['updated_at'] as int?,
-      ),
-    );
+        query.length,
+        (index) => Task(
+              id: query[index]['id'] as int,
+              name: query[index]['name'] as String,
+              status: query[index]['status'] as String,
+              dueDate: query[index]['due_date'] as int?,
+              createdAt: query[index]['created_at'] as int?,
+              updatedAt: query[index]['updated_at'] as int?,
+            ));
 
-    tasks = tasksList;
+    // clear all arrays
+    clearAllTasksArrays();
+    // sort tasks
+    for (var task in tasksList) {
+      if (task.status == 'todo') {
+        todoTasks.add(task);
+      } else if (task.status == 'done') {
+        doneTasks.add(task);
+      } else {
+        archivedTasks.add(task);
+      }
+    }
 
     emit(TasksFetchedState());
-    return tasks;
+    return tasksList;
+  }
+
+  void clearAllTasksArrays() {
+    todoTasks = [];
+    doneTasks = [];
+    archivedTasks = [];
   }
 
   Future<void> deleteTask(int id) async {
@@ -158,11 +184,9 @@ class AppCubit extends Cubit<AppStates> {
       task.toMap(),
       where: 'id = ?',
       whereArgs: [task.id],
-    );
+    ).then((value) => getTasks(null));
 
     emit(TaskUpdatedState());
-
-    getTasks(null);
 
     return task;
   }

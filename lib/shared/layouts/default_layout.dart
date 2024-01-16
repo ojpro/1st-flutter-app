@@ -1,4 +1,3 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:first_app/models/migrations/task.dart';
 import 'package:first_app/shared/components/bottom_sheet.dart';
 import 'package:first_app/shared/cubit/cubit.dart';
@@ -6,10 +5,7 @@ import 'package:first_app/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../components/default_input.dart';
-
 class DefaultLayout extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -20,6 +16,7 @@ class DefaultLayout extends StatelessWidget {
           AppCubit appCubit = BlocProvider.of(context);
 
           return Scaffold(
+            backgroundColor: const Color(0xFFFFFFFF),
             key: appCubit.scaffoldKey,
             appBar: AppBar(
               title: const Text('Todo App'),
@@ -121,28 +118,7 @@ class DefaultLayout extends StatelessWidget {
                 ),
               ],
             ),
-            body: ConditionalBuilder(
-              condition: appCubit.tasks.isNotEmpty,
-              builder: (context) => appCubit.getCurrentScreen(),
-              fallback: (context) => const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(
-                      image: AssetImage('assets/images/empty.png'),
-                      width: 240,
-                    ),
-                    Text(
-                      'Great Job!',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
+            body: appCubit.getCurrentScreen(),
           );
         },
       ),
