@@ -5,6 +5,7 @@ A collection of Flutter apps I built during a Flutter course
 List of Apps :
 
 - BMI: Beautifully Designed BMI Calculator
+- Todo App: simple and yet cute todo app
 - Messenger: Messenger Clone with some UI edits
 - Apollo: Simple Dark UI that shows the list of planets
 - Login: Login Screen with a dark background and a simple UI
@@ -14,6 +15,10 @@ List of Apps :
 
 # BMI Calculator
 ![image](https://github.com/ojpro/1st-flutter-app/assets/108437129/503c54cb-91e9-42fa-b882-71091a51c358)
+
+# Todo App
+![15shots_so](https://github.com/ojpro/1st-flutter-app/assets/108437129/60105463-e8ee-45db-83fe-c6d314287307)
+
 
 # Login Screen
 ![image](https://github.com/ojpro/1st-flutter-app/assets/108437129/b4b216d4-69e1-4885-bcd2-e768cf64130f)
